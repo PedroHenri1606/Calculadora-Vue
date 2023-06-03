@@ -1,48 +1,122 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <table class="table table-hover">
-      <td colspan="4">0</td> 
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>+</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>5</td>
-        <td>6</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>8</td>
-        <td>9</td>
-        <td>*</td>
-      </tr>
-      <tr>
-        <td>C</td>
-        <td>0</td>
-        <td>X</td>
-        <td>/</td>
-      </tr>
-    </table>
+    <div class="d-flex justify-content-center">
     
-  </div>
+      <table class="table w-25">
+        <tbody>
+        <tr> 
+        <td class= "topoTabela" colspan="4">{{ output || 0 }}</td> 
+      </tr>
+      <tr>
+        <td @click="limpar()" class="botaoCalculoSuperior">C</td>
+        <td @click="positivoOuNegativo()" class="botaoCalculoSuperior">+/-</td>
+        <td   class="botaoCalculoSuperior">%</td>
+        <td class= "table-warning botaoCalculo" >÷</td>
+      </tr>
+      <tr>
+        <td @click="somaNumero(7)" class="botao">7</td>
+        <td @click="somaNumero(8)" class="botao">8</td>
+        <td @click="somaNumero(9)" class="botao">9</td>
+        <td class= "table-warning botaoCalculo" @click="efetuaCalculo('multiplicacao')">X</td>
+      </tr>
+      <tr>
+        <td @click="somaNumero(4)" class="botao">4</td>
+        <td @click="somaNumero(5)" class="botao">5</td>
+        <td @click="somaNumero(6)" class="botao">6</td>
+        <td class= "table-warning botaoCalculo" @click="efetuaCalculo('subtrarir')">-</td>
+      </tr>
+      <tr>
+        <td @click="somaNumero(1)" class="botao">1</td>
+        <td @click="somaNumero(2)" class="botao">2</td>
+        <td @click="somaNumero(3)" class="botao">3</td>
+        <td class= "table-warning botaoCalculo" @click="efetuaCalculo('adicao')">+</td>
+      </tr>
+      <tr>
+        <td @click="somaNumero(0)" colspan="2" class="botao">0</td>
+        <td @click="somaNumero('.')" class="botao">.</td>
+        <td @click="chamaCalculo()" class="botaoCalculo">=</td>
+      </tr>
+
+        </tbody>
+      </table>
+    
+    </div>
 </template>
+
 
 <script>
 export default {
   name: 'CalculadoraTeste',
   props: {
     msg: String
-  }
+  },
+  data(){
+    return{
+      output:'',
+      valorAntigo: null,
+      operadorClicado: false,
+    }
+    },
+    methods:{
+
+      somaNumero(x){
+        if(this.operadorClicado){
+          this.output = '';
+          this.operadorClicado=false;
+        }
+        this.output=`${this.output}${x}`
+      },
+
+      limpar(){
+        this.output = ''  ;
+      },
+
+      positivoOuNegativo(){
+        this.output = this.output[0] === '-' ? this.output.slice(1):`-${this.output}`;
+      },
+
+      efetuaCalculo(calculo){
+        
+        if(calculo === 'adicao'){
+          this.calculo =(a,b) =>{
+            return parseFloat(a)+parseFloat(b);
+          }
+        } else if(calculo === 'subtrair'){
+          this.calculo =(a,b) =>{
+            return parseFloat(a)-parseFloat(b);
+          }
+        }
+        if(calculo === 'dividir'){
+          this.calculo=(a,b) =>{
+            return parseFloat(a)/parseFloat(b);
+          }
+        }
+        if(calculo === 'multiplicacao'){
+          this.calculo=(a,b)=>{
+            return parseFloat(a)*parseFloat(b);
+          }
+        }
+        
+        this.valorAntigo = this.output;
+        this.operadorClicado=true;
+        this.output = '';
+      },
+
+      chamaCalculo(){
+        this.output = `${this.calculo(this.valorAntigo, this.output)}`;
+        this.valorAntigo = null;
+      }
+
+    }
 }
 </script>
 
+
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+div{
+  background-color: black;
+}
 h3 {
   margin: 40px 0 0;
 }
@@ -57,4 +131,66 @@ li {
 a {
   color: #42b983;
 }
+
+.topoTabela{
+  font-size: 50px;
+  color: white;
+  background-color: black;
+  border-color: black;
+  border-radius: 500px;
+  
+  transform: scale(0.9);
+}
+
+.botao{
+  font-size: 50px;
+  color: white;
+  background-color: rgba(37, 37, 37, 0.829);
+  border-color: black;
+  border-radius: 500px;
+  height: 90px;
+  width: 90px;
+  transition: 1s;
+  transform: scale(0.9);
+ 
+}
+
+.botao:hover{
+  transition: 1s;
+  font-weight: 300;
+  background-color: rgb(54, 54, 54);
+}
+
+.botaoCalculo{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 200  ;
+  font-size: 50px;
+  background-color: orange;
+  border-color: black;
+  border-radius: 100px;
+  transform: scale(0.9);
+}
+
+.botaoCalculo:hover{
+  transition: 1s;
+  background-color: rgb(255, 197, 90);
+}
+
+.botaoCalculoSuperior{
+  text-transform: uppercase;
+  font-weight: 200  ;
+  font-size: 50px;
+  background-color: grey;
+  border-color: black;
+  border-radius: 50px;
+  color: black;
+  transform: scale(0.9);
+}
+
+.botaoCalculoSuperior:hover{
+  transition: 1s;
+  background-color: rgb(204, 204, 204);
+}
+
 </style>

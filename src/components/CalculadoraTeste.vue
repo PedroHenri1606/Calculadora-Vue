@@ -114,7 +114,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-div{
+table{
   background-color: black;
 }
 h3 {
@@ -138,20 +138,20 @@ a {
   background-color: black;
   border-color: black;
   border-radius: 500px;
-  
+  text-align: right;
   transform: scale(0.9);
 }
 
 .botao{
-  font-size: 50px;
   color: white;
   background-color: rgba(37, 37, 37, 0.829);
+  font-size: 50px;
   border-color: black;
-  border-radius: 500px;
+  border-radius: 100px;
   height: 90px;
-  width: 90px;
-  transition: 1s;
+  width: 80px;
   transform: scale(0.9);
+  transition: 1s;
  
 }
 
@@ -163,13 +163,14 @@ a {
 
 .botaoCalculo{
   color: white;
-  text-transform: uppercase;
-  font-weight: 200  ;
-  font-size: 50px;
   background-color: orange;
+  font-size: 50px;
   border-color: black;
   border-radius: 100px;
+  height: 90px;
+  width: 80px;
   transform: scale(0.9);
+  transition: 1s;
 }
 
 .botaoCalculo:hover{
@@ -178,14 +179,15 @@ a {
 }
 
 .botaoCalculoSuperior{
-  text-transform: uppercase;
-  font-weight: 200  ;
-  font-size: 50px;
-  background-color: grey;
-  border-color: black;
-  border-radius: 50px;
   color: black;
+  background-color: grey;
+  font-size: 50px;
+  border-color: black;
+  border-radius: 100px;
+  height: 90px;
+  width: 80px;
   transform: scale(0.9);
+  transition: 1s;
 }
 
 .botaoCalculoSuperior:hover{
